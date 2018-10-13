@@ -21,4 +21,3 @@ git commit -m "$msg"
 git push origin master
 
 cd blog/
-hugo -t hugo-tranquilpeak-theme
