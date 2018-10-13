@@ -73,8 +73,8 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Rails】jira-rubyでOAuth認証">
 <meta name="twitter:title" content="【Rails】jira-rubyでOAuth認証">
-<meta property="og:url" content="https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
-<meta property="twitter:url" content="https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+<meta property="og:url" content="https://shoooohei.github.io/posts/jira-ruby1/">
+<meta property="twitter:url" content="https://shoooohei.github.io/posts/jira-ruby1/">
 <meta property="og:site_name" content="Hugo tranquilpeak theme">
 <meta property="og:description" content="最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。 jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。
 まずは、JiraのOAuth認証についてです。
@@ -167,12 +167,12 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
 
     <title>【Rails】jira-rubyでOAuth認証</title>
 
-    <link rel="icon" href="https://shoooohei.github.io/blog/public/favicon.png">
+    <link rel="icon" href="https://shoooohei.github.io/favicon.png">
     
 
     
 
-    <link rel="canonical" href="https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+    <link rel="canonical" href="https://shoooohei.github.io/posts/jira-ruby1/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -180,7 +180,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="https://shoooohei.github.io/blog/public/css/style-nnm2spxvve8onlujjlegkkytaehyadd4ksxc1hyzzq9a2wvtrgbljqyulomn.min.css" />
+    <link rel="stylesheet" href="https://shoooohei.github.io/css/style-nnm2spxvve8onlujjlegkkytaehyadd4ksxc1hyzzq9a2wvtrgbljqyulomn.min.css" />
     
     
 
@@ -195,12 +195,12 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
       <header id="header" data-behavior="1">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="https://shoooohei.github.io/blog/public/">Hugo tranquilpeak theme</a>
+    <a class="header-title-link" href="https://shoooohei.github.io/">Hugo tranquilpeak theme</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="https://shoooohei.github.io/blog/public/#about">
+         href="https://shoooohei.github.io/#about">
     
     
     
@@ -216,7 +216,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <a href="https://shoooohei.github.io/blog/public/#about">
+        <a href="https://shoooohei.github.io/#about">
           <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=110" alt="プロフィール画像" />
         </a>
         <h4 class="sidebar-profile-name">Kawasaki Shohei</h4>
@@ -229,7 +229,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/public/">
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -239,7 +239,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/public/categories">
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/categories">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -249,7 +249,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/public/tags">
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/tags">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -259,7 +259,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/public/archives">
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/archives">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -269,7 +269,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/public/#about">
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/#about">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -307,7 +307,7 @@ rake jira:generate_public_cert  生成されたコンシューマーキーとパ
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/public/index.xml">
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/index.xml">
     
       <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
       
@@ -618,7 +618,7 @@ end
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/blog/public/posts/jira-ruby2/" data-tooltip="【Rails】jira-rubyでJira課題の追加と更新">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/posts/jira-ruby2/" data-tooltip="【Rails】jira-rubyでJira課題の追加と更新">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">次</span>
@@ -644,19 +644,19 @@ end
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shoooohei.github.io/posts/jira-ruby1/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shoooohei.github.io/posts/jira-ruby1/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shoooohei.github.io/posts/jira-ruby1/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -704,7 +704,7 @@ end
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/blog/public/posts/jira-ruby2/" data-tooltip="【Rails】jira-rubyでJira課題の追加と更新">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/posts/jira-ruby2/" data-tooltip="【Rails】jira-rubyでJira課題の追加と更新">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">次</span>
@@ -730,19 +730,19 @@ end
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shoooohei.github.io/posts/jira-ruby1/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shoooohei.github.io/posts/jira-ruby1/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shoooohei.github.io/blog/public/posts/jira-ruby1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shoooohei.github.io/posts/jira-ruby1/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -772,19 +772,19 @@ end
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshoooohei.github.io%2Fblog%2Fpublic%2Fposts%2Fjira-ruby1%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshoooohei.github.io%2Fposts%2Fjira-ruby1%2F">
           <i class="fa fa-facebook-official"></i><span>Facebookで共有</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fshoooohei.github.io%2Fblog%2Fpublic%2Fposts%2Fjira-ruby1%2F">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fshoooohei.github.io%2Fposts%2Fjira-ruby1%2F">
           <i class="fa fa-twitter"></i><span>Twitterで共有</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fshoooohei.github.io%2Fblog%2Fpublic%2Fposts%2Fjira-ruby1%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fshoooohei.github.io%2Fposts%2Fjira-ruby1%2F">
           <i class="fa fa-google-plus"></i><span>Google&#43;で共有</span>
         </a>
       </li>
@@ -857,7 +857,7 @@ end
     
   
     
-    <div id="cover" style="background-image:url('https://shoooohei.github.io/blog/public/images/cover.jpg');"></div>
+    <div id="cover" style="background-image:url('https://shoooohei.github.io/images/cover.jpg');"></div>
   
 
 
@@ -869,7 +869,7 @@ end
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="https://shoooohei.github.io/blog/public/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+<script src="https://shoooohei.github.io/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
 
 
 <script lang="javascript">
@@ -904,7 +904,7 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = 'https:\/\/shoooohei.github.io\/blog\/public\/posts\/jira-ruby1\/';
+          this.page.url = 'https:\/\/shoooohei.github.io\/posts\/jira-ruby1\/';
           
             this.page.identifier = '\/posts\/jira-ruby1\/'
           
