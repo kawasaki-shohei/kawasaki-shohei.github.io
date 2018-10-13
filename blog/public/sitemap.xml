@@ -3,39 +3,43 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://shoooohei.github.io/blog/public/posts/next/</loc>
-    <lastmod>2018-10-13T21:10:14+09:00</lastmod>
+    <loc>https://shoooohei.github.io/blog/posts/create-blog-by-hugo/</loc>
+    <lastmod>2018-10-13T23:56:01+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shoooohei.github.io/blog/public/posts/new-post/</loc>
-    <lastmod>2018-10-13T20:11:20+09:00</lastmod>
+    <loc>https://shoooohei.github.io/blog/posts/jira-ruby2/</loc>
+    <lastmod>2018-10-07T22:52:30+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shoooohei.github.io/blog/public/archives/</loc>
+    <loc>https://shoooohei.github.io/blog/posts/jira-ruby1/</loc>
+    <lastmod>2018-10-07T22:52:24+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://shoooohei.github.io/blog/posts/</loc>
+    <lastmod>2017-03-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://shoooohei.github.io/blog/archives/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shoooohei.github.io/blog/public/categories/</loc>
+    <loc>https://shoooohei.github.io/blog/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shoooohei.github.io/blog/public/</loc>
-    <lastmod>2018-10-13T21:10:14+09:00</lastmod>
+    <loc>https://shoooohei.github.io/blog/</loc>
+    <lastmod>2018-10-13T23:56:01+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shoooohei.github.io/blog/public/posts/</loc>
-    <lastmod>2018-10-13T21:10:14+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoooohei.github.io/blog/public/tags/</loc>
+    <loc>https://shoooohei.github.io/blog/tags/</loc>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.49.2 with theme Tranquilpeak 0.4.3-SNAPSHOT">
+<meta name="author" content="Kawasaki Shohei">
+<meta name="keywords" content="">
+<meta name="description" content="最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。 jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。
+今回は、前回のJiraのOAuth認証の実装ができていることを前提として、
+課題の更新や追加に関して書いていきます。。
+バージョン ruby 2.2.0
+rails 4.2.1
+Jira Software Server 7.11.2
+Jiraのプロジェクトの取得方法 プロジェクトはプロジェクトIDやkeyを指定して取得できます。
+# 全てのプロジェクトを取得 @client.Project.all # プロジェクトのidを指定して取得 @client.Project.find(2) # プロジェクトのキーを指定して取得 @client.Project.find(&#39;SAMPLEPROJECT-1&#39;)  課題の取得方法 課題もプロジェクト同様に、課題IDとkeyを指定して取得できます。 存在しない課題の場合、JIRA::HTTPErrorになります。
+# 全ての課題を取得 @client.Issue.all # 課題IDを指定して取得 @client.Issue.find(1000)  ステータスの取得方法 ステータスもよく似た方法で取得できます。
+# 全てのステータスを取得 @client.Status.all # ステータスIDを指定して取得 @client.Status.find(id)  優先度取得方法 優先度も同様です。
+# 全ての優先度を取得 @client.Priority.all # IDを指定して取得 @client.Priority.find(id)  課題タイプの取得方法 課題タイプはプロジェクトに紐づいているので、プロジェクトを特定してから取得します。
+@client.Project.find(id).issuetypes  課題の更新方法 課題を更新するときは、まず更新したい課題を取得します。
+issue = @client.Issue.find(id)  次に、更新したいパラメータのみfieldsをkeyとして、値に付与します。
+idが必要なものはidをkeyにしましょう。
+issue.save({&quot;fields&quot; =&gt; { &quot;project&quot; =&gt; {&quot;id&quot; =&gt; 2}, &quot;summary&quot; =&gt; &quot;hogehogesummary&quot;], &quot;issuetype&quot; =&gt; {&quot;id&quot; =&gt; 3} }}) issue.">
+
+
+<meta property="og:description" content="最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。 jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。
+今回は、前回のJiraのOAuth認証の実装ができていることを前提として、
+課題の更新や追加に関して書いていきます。。
+バージョン ruby 2.2.0
+rails 4.2.1
+Jira Software Server 7.11.2
+Jiraのプロジェクトの取得方法 プロジェクトはプロジェクトIDやkeyを指定して取得できます。
+# 全てのプロジェクトを取得 @client.Project.all # プロジェクトのidを指定して取得 @client.Project.find(2) # プロジェクトのキーを指定して取得 @client.Project.find(&#39;SAMPLEPROJECT-1&#39;)  課題の取得方法 課題もプロジェクト同様に、課題IDとkeyを指定して取得できます。 存在しない課題の場合、JIRA::HTTPErrorになります。
+# 全ての課題を取得 @client.Issue.all # 課題IDを指定して取得 @client.Issue.find(1000)  ステータスの取得方法 ステータスもよく似た方法で取得できます。
+# 全てのステータスを取得 @client.Status.all # ステータスIDを指定して取得 @client.Status.find(id)  優先度取得方法 優先度も同様です。
+# 全ての優先度を取得 @client.Priority.all # IDを指定して取得 @client.Priority.find(id)  課題タイプの取得方法 課題タイプはプロジェクトに紐づいているので、プロジェクトを特定してから取得します。
+@client.Project.find(id).issuetypes  課題の更新方法 課題を更新するときは、まず更新したい課題を取得します。
+issue = @client.Issue.find(id)  次に、更新したいパラメータのみfieldsをkeyとして、値に付与します。
+idが必要なものはidをkeyにしましょう。
+issue.save({&quot;fields&quot; =&gt; { &quot;project&quot; =&gt; {&quot;id&quot; =&gt; 2}, &quot;summary&quot; =&gt; &quot;hogehogesummary&quot;], &quot;issuetype&quot; =&gt; {&quot;id&quot; =&gt; 3} }}) issue.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Rails】jira-rubyでJira課題の追加と更新">
+<meta name="twitter:title" content="【Rails】jira-rubyでJira課題の追加と更新">
+<meta property="og:url" content="https://shoooohei.github.io/blog/posts/jira-ruby2/">
+<meta property="twitter:url" content="https://shoooohei.github.io/blog/posts/jira-ruby2/">
+<meta property="og:site_name" content="Hugo tranquilpeak theme">
+<meta property="og:description" content="最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。 jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。
+今回は、前回のJiraのOAuth認証の実装ができていることを前提として、
+課題の更新や追加に関して書いていきます。。
+バージョン ruby 2.2.0
+rails 4.2.1
+Jira Software Server 7.11.2
+Jiraのプロジェクトの取得方法 プロジェクトはプロジェクトIDやkeyを指定して取得できます。
+# 全てのプロジェクトを取得 @client.Project.all # プロジェクトのidを指定して取得 @client.Project.find(2) # プロジェクトのキーを指定して取得 @client.Project.find(&#39;SAMPLEPROJECT-1&#39;)  課題の取得方法 課題もプロジェクト同様に、課題IDとkeyを指定して取得できます。 存在しない課題の場合、JIRA::HTTPErrorになります。
+# 全ての課題を取得 @client.Issue.all # 課題IDを指定して取得 @client.Issue.find(1000)  ステータスの取得方法 ステータスもよく似た方法で取得できます。
+# 全てのステータスを取得 @client.Status.all # ステータスIDを指定して取得 @client.Status.find(id)  優先度取得方法 優先度も同様です。
+# 全ての優先度を取得 @client.Priority.all # IDを指定して取得 @client.Priority.find(id)  課題タイプの取得方法 課題タイプはプロジェクトに紐づいているので、プロジェクトを特定してから取得します。
+@client.Project.find(id).issuetypes  課題の更新方法 課題を更新するときは、まず更新したい課題を取得します。
+issue = @client.Issue.find(id)  次に、更新したいパラメータのみfieldsをkeyとして、値に付与します。
+idが必要なものはidをkeyにしましょう。
+issue.save({&quot;fields&quot; =&gt; { &quot;project&quot; =&gt; {&quot;id&quot; =&gt; 2}, &quot;summary&quot; =&gt; &quot;hogehogesummary&quot;], &quot;issuetype&quot; =&gt; {&quot;id&quot; =&gt; 3} }}) issue.">
+<meta name="twitter:description" content="最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。 jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。
+今回は、前回のJiraのOAuth認証の実装ができていることを前提として、
+課題の更新や追加に関して書いていきます。。
+バージョン ruby 2.2.0
+rails 4.2.1
+Jira Software Server 7.11.2
+Jiraのプロジェクトの取得方法 プロジェクトはプロジェクトIDやkeyを指定して取得できます。
+# 全てのプロジェクトを取得 @client.Project.all # プロジェクトのidを指定して取得 @client.Project.find(2) # プロジェクトのキーを指定して取得 @client.Project.find(&#39;SAMPLEPROJECT-1&#39;)  課題の取得方法 課題もプロジェクト同様に、課題IDとkeyを指定して取得できます。 存在しない課題の場合、JIRA::HTTPErrorになります。
+# 全ての課題を取得 @client.Issue.all # 課題IDを指定して取得 @client.Issue.find(1000)  ステータスの取得方法 ステータスもよく似た方法で取得できます。
+# 全てのステータスを取得 @client.Status.all # ステータスIDを指定して取得 @client.Status.find(id)  優先度取得方法 優先度も同様です。
+# 全ての優先度を取得 @client.Priority.all # IDを指定して取得 @client.Priority.find(id)  課題タイプの取得方法 課題タイプはプロジェクトに紐づいているので、プロジェクトを特定してから取得します。
+@client.Project.find(id).issuetypes  課題の更新方法 課題を更新するときは、まず更新したい課題を取得します。
+issue = @client.Issue.find(id)  次に、更新したいパラメータのみfieldsをkeyとして、値に付与します。
+idが必要なものはidをkeyにしましょう。
+issue.save({&quot;fields&quot; =&gt; { &quot;project&quot; =&gt; {&quot;id&quot; =&gt; 2}, &quot;summary&quot; =&gt; &quot;hogehogesummary&quot;], &quot;issuetype&quot; =&gt; {&quot;id&quot; =&gt; 3} }}) issue.">
+<meta property="og:locale" content="ja">
+
+  
+    <meta property="article:published_time" content="2018-10-07T22:52:30">
+  
+  
+    <meta property="article:modified_time" content="2018-10-07T22:52:30">
+  
+  
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=640">
+
+
+    <title>【Rails】jira-rubyでJira課題の追加と更新</title>
+
+    <link rel="icon" href="https://shoooohei.github.io/blog/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://shoooohei.github.io/blog/posts/jira-ruby2/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://shoooohei.github.io/blog/css/style-nnm2spxvve8onlujjlegkkytaehyadd4ksxc1hyzzq9a2wvtrgbljqyulomn.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://shoooohei.github.io/blog/">Hugo tranquilpeak theme</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://shoooohei.github.io/blog/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=90" alt="プロフィール画像" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://shoooohei.github.io/blog/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=110" alt="プロフィール画像" />
+        </a>
+        <h4 class="sidebar-profile-name">Kawasaki Shohei</h4>
+        
+          <h5 class="sidebar-profile-bio">Super bio with markdown support <strong>COOL</strong></h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">ホーム</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">カテゴリー</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">タグ</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">アーカイブ</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">プロフィール</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/kakawait" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/636472/kakawait" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shoooohei.github.io/blog/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      【Rails】jira-rubyでJira課題の追加と更新
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-10-07T22:52:30&#43;09:00">
+        
+  10 7, 2018
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+<p>最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。
+jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。</p>
+
+<p>今回は、前回の<a href="./jira-ruby1.md">JiraのOAuth認証の実装</a>ができていることを前提として、<br />
+課題の更新や追加に関して書いていきます。。<br />
+ </p>
+
+<h1 id="バージョン">バージョン</h1>
+
+<p>ruby 2.2.0<br />
+rails 4.2.1<br />
+Jira Software Server 7.11.2</p>
+
+<h1 id="jiraのプロジェクトの取得方法">Jiraのプロジェクトの取得方法</h1>
+
+<p>プロジェクトはプロジェクトIDやkeyを指定して取得できます。</p>
+
+<pre><code class="language-rb"># 全てのプロジェクトを取得
+@client.Project.all
+# プロジェクトのidを指定して取得
+@client.Project.find(2)
+# プロジェクトのキーを指定して取得
+@client.Project.find('SAMPLEPROJECT-1')
+</code></pre>
+
+<h1 id="課題の取得方法">課題の取得方法</h1>
+
+<p>課題もプロジェクト同様に、課題IDとkeyを指定して取得できます。
+存在しない課題の場合、JIRA::HTTPErrorになります。</p>
+
+<pre><code class="language-rb"># 全ての課題を取得
+@client.Issue.all
+# 課題IDを指定して取得
+@client.Issue.find(1000)
+</code></pre>
+
+<h1 id="ステータスの取得方法">ステータスの取得方法</h1>
+
+<p>ステータスもよく似た方法で取得できます。</p>
+
+<pre><code class="language-rb"># 全てのステータスを取得
+@client.Status.all
+# ステータスIDを指定して取得
+@client.Status.find(id)
+</code></pre>
+
+<h1 id="優先度取得方法">優先度取得方法</h1>
+
+<p>優先度も同様です。</p>
+
+<pre><code class="language-rb"># 全ての優先度を取得
+@client.Priority.all
+# IDを指定して取得
+@client.Priority.find(id)
+</code></pre>
+
+<h1 id="課題タイプの取得方法">課題タイプの取得方法</h1>
+
+<p>課題タイプはプロジェクトに紐づいているので、プロジェクトを特定してから取得します。</p>
+
+<pre><code class="language-rb">@client.Project.find(id).issuetypes
+</code></pre>
+
+<h1 id="課題の更新方法">課題の更新方法</h1>
+
+<p>課題を更新するときは、まず更新したい課題を取得します。</p>
+
+<pre><code class="language-rb">issue = @client.Issue.find(id)
+</code></pre>
+
+<p>次に、更新したいパラメータのみfieldsをkeyとして、値に付与します。<br />
+idが必要なものはidをkeyにしましょう。</p>
+
+<pre><code class="language-rb">issue.save({&quot;fields&quot; =&gt; {
+  &quot;project&quot; =&gt; {&quot;id&quot; =&gt; 2},
+  &quot;summary&quot; =&gt; &quot;hogehogesummary&quot;],
+  &quot;issuetype&quot; =&gt; {&quot;id&quot; =&gt; 3}
+}})
+issue.fetch
+</code></pre>
+
+<h1 id="課題の追加方法">課題の追加方法</h1>
+
+<p>課題の追加はより複雑です。<br />
+単純に課題を追加するには、以下のようにできます。</p>
+
+<pre><code class="language-rb">issue = client.Issue.build
+labels = ['label1', 'label2']
+issue.save({
+ &quot;fields&quot; =&gt; {
+   &quot;summary&quot;   =&gt; &quot;blarg from in example.rb&quot;,
+   &quot;project&quot;   =&gt; {&quot;key&quot; =&gt; &quot;SAMPLEPROJECT&quot;},
+   &quot;issuetype&quot; =&gt; {&quot;id&quot; =&gt; &quot;3&quot;},
+   &quot;labels&quot;    =&gt; labels,
+   &quot;priority&quot;  =&gt; {&quot;id&quot; =&gt; &quot;1&quot;}
+ }
+})
+issue.fetch
+</code></pre>
+
+<p>ただ、Jiraでは非常に細かく設定をカスタマイズできます。<br />
+課題のフィールドの入力の許可設定ページ(/secure/admin/ViewIssueFields.jspa)では、<br />
+必須フィールド以外のフィールドを入力禁止にすることができます。<br />
+禁止されているフィールドを追加しようとするとエラーになるので、<br />
+私の場合は、以下のように、必須項目以外は一つずつ更新していきました。</p>
+
+<pre><code class="language-rb">issue = @client.Issue.build
+# dataは送信したい詳細データ
+issue = create_or_update_issue(data, issue)
+# 必須フィールド入力してとりあえず課題を生成。
+def create_or_update_issue(data, issue)
+  begin
+    issue.save({&quot;fields&quot; =&gt; {
+      &quot;project&quot; =&gt; {&quot;id&quot; =&gt; &quot;#{data[&quot;projectId&quot;]}&quot;},
+      &quot;summary&quot; =&gt; data[&quot;summary&quot;],
+      &quot;issuetype&quot; =&gt; {&quot;id&quot; =&gt; &quot;#{data[&quot;issueTypeId&quot;]}&quot;}
+    }})
+  rescue JIRA::HTTPError
+    issue
+  end
+  issue
+end
+
+# 上手く課題を生成できれば、残りのフィールドを追加するために、その課題を更新していく。
+unless issue.try(:errors) || issue.try(:errorMessages)
+  update_unrequire_fields(data, issue.id)
+end
+
+# 必須フィールド以外のフィールドの追加
+def update_unrequire_fields(data, issue_id)
+  unrequire_keys = %w(description priorityId duedate)
+  unrequire_keys.each do |key|
+    begin
+      issue = @client.Issue.find(issue_id)
+      issue.save({&quot;fields&quot; =&gt; {new_key =&gt; (key.include?('Id') ? {&quot;id&quot; =&gt; &quot;#{data[key]}&quot;} : &quot;#{data[key]}&quot;)}})
+    rescue JIRA::HTTPError
+      nil
+    end
+  end
+end
+</code></pre>
+
+<h1 id="課題のステータスの更新方法">課題のステータスの更新方法</h1>
+
+<p>ステータスを更新するのは一苦労入ります。<br />
+Jiraをお使いであれば、わかると思いますが、Jiraではステータスを変更するときはトランジションを指定します。<br />
+REST APIでも一緒です。<br />
+ステータスを変更するときはトランジションを指定しなければいけません。</p>
+
+<pre><code class="language-rb">issue = @client.Issue.find(issue_id)
+# 変更したいステータスを取得
+new_status_name = self.Status.find(status_id).name
+# 課題に紐づいているトランジションを全て取得します。
+# トランジションとステータスは1対１の関係にあり、toメソッドで変更されるステータスを取得することができます。
+# トランジションで変更されるステータスと変更したいステータスを照合して、合致するものを取得します。
+begin
+  jira_transitions_id = issue.transitions.all.find{|jt| jt.to.name == new_status_name }.id
+rescue StandardError
+  jira_transitions_id = false
+end
+if jira_transitions_id
+  # 課題に紐づくトランジションをbuildしてからseveします。
+  issue_transition = issue.transitions.build
+  issue_transition.save!('transition' =&gt; { 'id' =&gt; jira_transitions_id})
+end
+</code></pre>
+
+<h1 id="エラーハンドリング">エラーハンドリング</h1>
+
+<p>エラーとしては、APIではほぼ課題に関するものはほぼ全て、JIRA::HTTPErrorになります。<br />
+ステータスコードは大抵400です。<br />
+詳しくは<a href="https://docs.atlassian.com/software/jira/docs/api/REST/7.6.1/">こちら</a>をご覧ください。<br />
+ただ、saveするときは失敗した場合は、issue.errorsもしくはissue.errorMessagesにエラーメッセージが入っています。<br />
+アクセストークンが有効ではない場合と認証タイプが違う場合はOAuth::Problemになります。</p>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>私が試したJiraの課題に関するとこは以上となります。
+Jiraは非常にカスタマイズできる項目が多いため、中々REST APIで対応するのは難しかったです。
+何かご指摘があればコメントください。</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/blog/posts/create-blog-by-hugo/" data-tooltip="Github PagesにHugoでブログを作成した">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">次</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/blog/posts/jira-ruby1/" data-tooltip="【Rails】jira-rubyでOAuth認証">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">前</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shoooohei.github.io/blog/posts/jira-ruby2/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shoooohei.github.io/blog/posts/jira-ruby2/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shoooohei.github.io/blog/posts/jira-ruby2/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Kawasaki Shohei. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/blog/posts/create-blog-by-hugo/" data-tooltip="Github PagesにHugoでブログを作成した">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">次</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shoooohei.github.io/blog/posts/jira-ruby1/" data-tooltip="【Rails】jira-rubyでOAuth認証">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">前</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shoooohei.github.io/blog/posts/jira-ruby2/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shoooohei.github.io/blog/posts/jira-ruby2/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shoooohei.github.io/blog/posts/jira-ruby2/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshoooohei.github.io%2Fblog%2Fposts%2Fjira-ruby2%2F">
+          <i class="fa fa-facebook-official"></i><span>Facebookで共有</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fshoooohei.github.io%2Fblog%2Fposts%2Fjira-ruby2%2F">
+          <i class="fa fa-twitter"></i><span>Twitterで共有</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fshoooohei.github.io%2Fblog%2Fposts%2Fjira-ruby2%2F">
+          <i class="fa fa-google-plus"></i><span>Google&#43;で共有</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=110" alt="プロフィール画像" />
+    
+    <h4 id="about-card-name">Kawasaki Shohei</h4>
+    
+      <div id="about-card-bio">Super bio with markdown support <strong>COOL</strong></div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Your job title
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Japan
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="検索" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center"></div>
+      <div class="results">
+        
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero=""
+         data-message-one=""
+         data-message-other="">
+         0 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://shoooohei.github.io/blog/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://shoooohei.github.io/blog/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/shoooohei.github.io\/blog\/posts\/jira-ruby2\/';
+          
+            this.page.identifier = '\/posts\/jira-ruby2\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

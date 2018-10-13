@@ -2,31 +2,92 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hugo tranquilpeak theme</title>
-    <link>https://shoooohei.github.io/blog/public/</link>
+    <link>https://shoooohei.github.io/blog/</link>
     <description>Recent content on Hugo tranquilpeak theme</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 13 Oct 2018 21:10:14 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 13 Oct 2018 23:56:01 +0900</lastBuildDate>
     
-	<atom:link href="https://shoooohei.github.io/blog/public/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shoooohei.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Next</title>
-      <link>https://shoooohei.github.io/blog/public/posts/next/</link>
-      <pubDate>Sat, 13 Oct 2018 21:10:14 +0900</pubDate>
+      <title>Github PagesにHugoでブログを作成した</title>
+      <link>https://shoooohei.github.io/blog/posts/create-blog-by-hugo/</link>
+      <pubDate>Sat, 13 Oct 2018 23:56:01 +0900</pubDate>
       
-      <guid>https://shoooohei.github.io/blog/public/posts/next/</guid>
-      <description>nextnext afdasdfasdfdfasdffdasfdf</description>
+      <guid>https://shoooohei.github.io/blog/posts/create-blog-by-hugo/</guid>
+      <description>USERNAME.github.ioリポジトリを作成 shoooohei.github.ioで作成
+Project pages or User/Organization pages 静的ページを
+https://shoooohei.github.io/
+か
+https://shoooohei.github.io/blog/
+などのルートディレクトリ直下に作りたいかどうかで違う。
+前者なら、User/Organization pages
+後者なら、Project pages
+今回は、ルートディレクトリは自分で静的なポートフォリオを作りたいから、後者で作成した。
+hugoのインストール brew install hugo  自分のリポジトリをクローン git clone your-repository-url cd shoooohei.github.io  静的ページを生成 hugo new site blog cd blog/  themeを入れる方法 cd /Users/shoheikawasaki/study/shoooohei.github.io/blog git submodule add -b master テンプレートのURL themes/テンプレート名 cp themes/テンプレート名/exampleSite/config.toml . cp themes/テンプレート名/archetypes/* archetypes/  基本情報を編集する vi themes/hugo-tranquilpeak-theme/exampleSite/config.toml # e.g git submodule add -b master https://github.com/kakawait/hugo-tranquilpeak-theme.git themes/hugo-tranquilpeak-them cp themes/hugo-tranquilpeak-theme/exampleSite/config.toml cp themes/hugo-tranquilpeak-theme/archetypes/* archetypes vi themes/hugo-tranquilpeak-theme/exampleSite/config.</description>
     </item>
     
     <item>
-      <title>New Post</title>
-      <link>https://shoooohei.github.io/blog/public/posts/new-post/</link>
-      <pubDate>Sat, 13 Oct 2018 20:11:20 +0900</pubDate>
+      <title>【Rails】jira-rubyでJira課題の追加と更新</title>
+      <link>https://shoooohei.github.io/blog/posts/jira-ruby2/</link>
+      <pubDate>Sun, 07 Oct 2018 22:52:30 +0900</pubDate>
       
-      <guid>https://shoooohei.github.io/blog/public/posts/new-post/</guid>
-      <description></description>
+      <guid>https://shoooohei.github.io/blog/posts/jira-ruby2/</guid>
+      <description>最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。 jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。
+今回は、前回のJiraのOAuth認証の実装ができていることを前提として、
+課題の更新や追加に関して書いていきます。。
+バージョン ruby 2.2.0
+rails 4.2.1
+Jira Software Server 7.11.2
+Jiraのプロジェクトの取得方法 プロジェクトはプロジェクトIDやkeyを指定して取得できます。
+# 全てのプロジェクトを取得 @client.Project.all # プロジェクトのidを指定して取得 @client.Project.find(2) # プロジェクトのキーを指定して取得 @client.Project.find(&#39;SAMPLEPROJECT-1&#39;)  課題の取得方法 課題もプロジェクト同様に、課題IDとkeyを指定して取得できます。 存在しない課題の場合、JIRA::HTTPErrorになります。
+# 全ての課題を取得 @client.Issue.all # 課題IDを指定して取得 @client.Issue.find(1000)  ステータスの取得方法 ステータスもよく似た方法で取得できます。
+# 全てのステータスを取得 @client.Status.all # ステータスIDを指定して取得 @client.Status.find(id)  優先度取得方法 優先度も同様です。
+# 全ての優先度を取得 @client.Priority.all # IDを指定して取得 @client.Priority.find(id)  課題タイプの取得方法 課題タイプはプロジェクトに紐づいているので、プロジェクトを特定してから取得します。
+@client.Project.find(id).issuetypes  課題の更新方法 課題を更新するときは、まず更新したい課題を取得します。
+issue = @client.Issue.find(id)  次に、更新したいパラメータのみfieldsをkeyとして、値に付与します。
+idが必要なものはidをkeyにしましょう。
+issue.save({&amp;quot;fields&amp;quot; =&amp;gt; { &amp;quot;project&amp;quot; =&amp;gt; {&amp;quot;id&amp;quot; =&amp;gt; 2}, &amp;quot;summary&amp;quot; =&amp;gt; &amp;quot;hogehogesummary&amp;quot;], &amp;quot;issuetype&amp;quot; =&amp;gt; {&amp;quot;id&amp;quot; =&amp;gt; 3} }}) issue.</description>
+    </item>
+    
+    <item>
+      <title>【Rails】jira-rubyでOAuth認証</title>
+      <link>https://shoooohei.github.io/blog/posts/jira-ruby1/</link>
+      <pubDate>Sun, 07 Oct 2018 22:52:24 +0900</pubDate>
+      
+      <guid>https://shoooohei.github.io/blog/posts/jira-ruby1/</guid>
+      <description>最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。 jira-rubyに関する日本語の記事は少ないみたいなので、誰かの手助けになれば幸いです。
+まずは、JiraのOAuth認証についてです。
+課題の更新や追加に関してはこちらをご覧ください。
+バージョン ruby 2.2.0
+rails 4.2.1
+Jira Software Server 7.11.2
+概要 JiraのREST APIは認証タイプが3タイプあります。
+- OAuth
+- HTTP Basic Auth
+- Cookie-Based Auth
+今回はJiraからも推奨されている、OAuth認証を使います。OAuth認証といえば、UUIDで違うアプリログインするときのものを想像することが多いですが、ログインするのではなく、OAuth認証で発行されたアクセストークンをキーにして、APIで課題を作成したりする方法を紹介します。
+gemのインストール 今回使うのはjira-rubyというgemです。
+gem &#39;jira-ruby&#39;, :require =&amp;gt; &#39;jira-ruby&#39;  bundle installします。
+必要なキーの生成 コンソールで以下を打ってコンシューマーキー、パブリックキーとプライベートキーを生成します。
+コンシューマーキーの生成
+rake jira:generate_consumer_key  パブリックキープライベートキーの生成
+rake jira:generate_public_cert  生成されたコンシューマーキーとパブリックキーをどこかにコピペしておきます。
+パブリックキーを生成した際に、表示される
+&amp;mdash;&amp;ndash;BEGIN CERTIFICATE&amp;mdash;&amp;ndash;
+や
+&amp;mdash;&amp;ndash;END CERTIFICATE&amp;mdash;&amp;ndash;
+あと、その前後にある改行も必要なのでまるっとコピペしておきます。
+生成したキーをJiraのアプリケーションリンク設定で設定する  jiraのアプリケーションリンクを作成
+アプリケーションリンクを作成するページ(ホスト名/plugins/servlet/applinks/listApplicationLinks)でリンクを作成します。
+ローカルの場合、http://localhost:3000と作成しておきます。
+ここで、無効なアプリケーションかもしれませんとアラートが表示される。
+これはAtlassian製品かどうかを確認するものなので、次のページへ行くまで「続行」を押します。
+ 受信設定 作成したアプリケーションリンクを編集します。
+サイドバーから受信設定を選択し、コンシューマーキーやパブリックキーなど必要項目欄を入力し、保存します。
+  clientの生成 JIRA::Clientインスタンスを生成 以下のoptionsの指定されたキーに値を設定することで、そのJiraのclientを作成できます。</description>
     </item>
     
   </channel>
