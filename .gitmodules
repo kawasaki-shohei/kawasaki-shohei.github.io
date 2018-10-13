@@ -1,0 +1,4 @@
+[submodule "blog/themes/hugo-tranquilpeak-theme"]
+	path = blog/themes/hugo-tranquilpeak-theme
+	url = https://github.com/kakawait/hugo-tranquilpeak-theme.git
+	branch = master
