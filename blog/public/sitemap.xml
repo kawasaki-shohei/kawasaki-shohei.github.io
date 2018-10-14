@@ -14,12 +14,7 @@
   
   <url>
     <loc>https://shoooohei.github.io/blog/public/posts/jira-ruby1/</loc>
-    <lastmod>2018-10-07T22:52:24+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://shoooohei.github.io/blog/public/posts/</loc>
-    <lastmod>2017-03-23T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-06T22:52:24+09:00</lastmod>
   </url>
   
   <url>
@@ -34,6 +29,12 @@
   
   <url>
     <loc>https://shoooohei.github.io/blog/public/</loc>
+    <lastmod>2018-10-13T23:56:01+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoooohei.github.io/blog/public/posts/</loc>
     <lastmod>2018-10-13T23:56:01+09:00</lastmod>
     <priority>0</priority>
   </url>

@@ -1,6 +1,6 @@
 ---
 title: "【Rails】jira-rubyでOAuth認証"
-date: 2018-10-07T22:52:24+09:00
+date: 2018-10-06T22:52:24+09:00
 draft: false
 ---
 最近、Railsアプリからjira-rubyというgemを使って、プロジェクト管理ツールであるJiraのREST APIでJiraに課題を追加したり更新したりできるようにしたので、その方法を書いていきます。

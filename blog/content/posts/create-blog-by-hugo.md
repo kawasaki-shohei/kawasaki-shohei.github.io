@@ -33,7 +33,7 @@ hugo new site blog
 cd blog/
 ```
 
-# themeを入れる方法
+# テンプレートを入れる方法
 ```bash
 cd /Users/shoheikawasaki/study/shoooohei.github.io/blog  
 git submodule add -b master テンプレートのURL themes/テンプレート名  
@@ -64,12 +64,12 @@ hugo -t hugo-tranquilpeak-theme
 
 # ローカルでのリアルタイム更新
 ```bash
-hugo server -D
+hugo server -D -w -t hugo-tranquilpeak-theme
 ```
 
 # ブラウザで表示
 ```bash
-localhost:1313
+http://localhost:1313
 ```
 
 # デプロイするためのシェル
