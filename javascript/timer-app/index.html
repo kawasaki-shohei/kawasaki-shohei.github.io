@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>タイマー</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    #main{
+      width: 300px;
+      height: 100px;
+      margin: 20px;
+      background-color: #f0f0f0;
+      position: relative;
+    }
+    #timer{
+      width: 200px;
+      height: 30px;
+      position: absolute;
+      top: 20px;
+      margin: 0 50px;
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: bold;
+      background-color: #f0ddd4;
+      text-align: center;
+    }
+    form{
+      position: relative;
+      top: 60px;
+      left: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>タイマー</h1>
+  <hr>
+  <div id="main">
+    <div id="timer">00:00:00</div>
+    <form>
+      <input type="button" id="start" value="start">
+      <input type="button" id="stop" value="stop" disabled="disabled">
+      <input type="button" id="restart" value="restart" disabled="disabled">
+      <input type="button" id="reset" value="reset" disabled="disabled">
+    </form>
+  </div>
+</body>
+
+<script>
+  $(function(){
+    var sec = 0;
+    var min = 0;
+    var hour = 0;
+    var time;  // 合計時間
+
+    // カウントアップ処理
+    function countup(){
+      sec += 1;
+      if(sec > 59){
+        sec = 0;
+        min += 1;
+      }
+      if(min > 59){
+        min = 0;
+        hour += 1;
+      }
+
+      // 1桁台のときに2桁にする処理 頭に0をつけて後ろ2桁を切り取る
+      sec_num = ('0' + sec).slice(-2);  // 7 → 07, 30 → 030
+      min_num = ('0' + min).slice(-2);
+      hour_num = ('0' + hour).slice(-2);
+
+      $('#timer').html(hour_num + ":" + min_num + ":" + sec_num);
+    }
+
+    // スタートボタン
+    $('#start').on("click", function(){
+      sec = 0;
+      min = 0;
+      hour = 0;
+      $('#timer').html('00:00:00');
+      // 1000ミリ秒毎にcountupを呼び出す
+      // clearIntervalできるように変数に代入
+      time = setInterval(countup, 1000);
+
+      $(this).prop("disabled", true);
+      //$(this).attr("disabled", "disabled");  でも同じ
+
+      $('#stop, #reset').removeAttr('disabled');
+    })
+
+    // ストップボタン
+    $('#stop').on("click", function(){
+      // 一時停止
+      clearInterval(time);
+      $(this).prop("disabled", true);
+      $('#restart').removeAttr('disabled');
+    })
+
+    // リスタート処理
+    $('#restart').on('click', function(){
+      time = setInterval(countup, 1000);
+      $(this).prop('disabled', true);
+      $('#stop').removeAttr('disabled');
+    })
+
+    //リセット処理
+    $('#reset').on("click", function(){
+      sec = 0;
+      min = 0;
+      hour = 0;
+      $('#timer').html('00:00:00');
+      clearInterval(time);
+      $('#stop, #reset, #restart').prop('disabled', true);
+      $('#start').removeAttr('disabled');
+    });
+
+  })
+</script>
+</html>
