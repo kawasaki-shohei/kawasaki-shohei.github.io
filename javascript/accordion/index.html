@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>アコーディオン</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    ul.accordion{
+      background: #eee;
+      width: 80%;
+      margin: 0 auto 30px;
+      padding: 10px;
+      font-size: 18px;
+    }
+    ul.accordion a{
+      display: block;
+      padding: 10px;
+      background-position: 97% center;
+      background-repeat: no-repeat;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+    ul.accordion span{
+      display: block;
+      padding: 10px;
+      background-position: 97%;
+      background-repeat: no-repeat;
+      color: #333;
+      font-weight: bold;
+    }
+    ul.accordion ul{
+      display: none;
+    }
+    ul.accordion > li{
+      background: -moz-linear-gradient(top, #c6f0fe, #27bcf9);
+      background: -webkit-gradient(linear, left top, left bottom, from(#c6f0fe), to(#27bcf9));
+    }
+    ul.accordion > li > p{
+      background: -moz-linear-gradient(top, #c6f0fe, #27bcf9);
+      background: -webkit-gradient(linear, left top, left bottom, from(#c6f0fe), to(#27bcf9));
+    }
+    ul.accordion > li > p span{
+      background-image: url(img/open.png);
+      background-size: 18px;
+    }
+    ul.accordion > li > p span.open{
+      background-image: url(img/close.png);
+      background-size: 18px;
+    }
+    ul.accordion > li > ul > li{
+      background: #999;
+      border-bottom: 1px solid #eee;
+    }
+    ul.accordion > li > ul > li > p{
+      background: #999;
+    }
+    ul.accordion > li > ul > li > ul > li{
+      background: #fff;
+      border-bottom: 1px dotted #888;
+    }
+    ul.accordion > li > ul > li > ul > li:last-child{
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>アコーディオン</h1>
+  <hr>
+  <ul class="accordion">
+    <li>
+      <P><span>List1</span></P>
+      <ul>
+        <li><a href="#">list1-1</a></li>
+        <li><a href="#">list1-2</a></li>
+        <li><a href="#">list1-3</a></li>
+      </ul>
+    </li>
+    <li>
+      <P><span>List2</span></P>
+      <ul>
+        <li><a href="#">list2-1</a></li>
+        <li><a href="#">list2-2</a></li>
+        <li><a href="#">list2-3</a></li>
+      </ul>
+    </li>
+    <li>
+      <P><span>List3</span></P>
+      <ul>
+        <li><a href="#">list3-1</a></li>
+        <li><a href="#">list3-2</a></li>
+        <li><a href="#">list3-3</a></li>
+      </ul>
+    </li>
+  </ul>
+
+</body>
+
+<script>
+  $(function(){
+    $('.accordion p').on("click", function(){
+      $(this).next('ul').slideToggle();
+      $(this).children('span').toggleClass('open');
+    })
+  })
+</script>
+</html>
