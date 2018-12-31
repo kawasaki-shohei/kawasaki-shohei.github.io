@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>タイマー</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    .input{
+      box-sizing: border-box;
+      width: 300px;
+      height: 40px;
+      font-size: 16px;
+      background-color: #fffffa;
+      margin-left: 12px;
+      padding: 0 4px;
+    }
+    #output{
+      width: 300px;
+      color: #333;
+      text-align: center;
+      padding: 8px 0;
+      border: 1px solid #333;
+      min-height: 24px;
+      margin-top: 8px;
+      margin-left: 60px;
+    }
+    #btn{
+      width: 300px;
+      margin-top: 8px;
+      margin-left: 60px;
+      color: #333;
+      display: block;
+      text-align: center;
+      background-color: #f2f2f2;
+      padding: 8px 0;
+      font-size: 1rem;
+      font-weight: 700;
+      border: 1px solid #e6e6e6;
+      box-sizing: border-box;
+    }
+    #btn:hover{
+      cursor: pointer;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <p><label>最小値</label><input type="text" value="5" id="input1" class="input"></p>
+    <p><label>最大値</label><input type="text" value="10" id="input2" class="input"></p>
+    <p id="output">乱数</p>
+    <div id="btn">実行</div>
+  </div>
+</body>
+
+<script>
+  $(function(){
+    $('#btn').on("click", function(){
+
+      // 入力された文字が数字列かどうかを判定
+      if($('#input1').val().match(/^\d+$/) && $('#input2').val().match(/^\d+$/)){
+        var min = Number($('#input1').val());
+        console.log(min + " :min");
+
+        // 最大値
+        var max = Number($('#input2').val());
+        console.log(max + " :max");
+
+        // 0~10乱数を生成
+        // 例: (最小値: 5, 最大値: 10) -> 0~6の乱数を生成し、その乱数に最小値(5)を足す
+        var rand = Math.floor(Math.random() * (max + 1 - min)) + min;
+        console.log(rand + " :rand");
+        $('#output').text(rand);
+      }else{
+        $('#output').text("error");
+      }
+
+    })
+  })
+</script>
+</html>

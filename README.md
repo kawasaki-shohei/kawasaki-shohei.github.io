@@ -3,3 +3,4 @@
 - [スクロールボタン](https://shoooohei.github.io/javascript/scroll_button/)
 - [タイマーアプリ](https://shoooohei.github.io/javascript/timer_app/)
 - [アコーディオン](https://shoooohei.github.io/javascript/accordion)
+- [乱数の生成](https://shoooohei.github.io/javascript/random_number)
