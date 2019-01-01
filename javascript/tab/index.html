@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>タブ</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    #tab-menu{
+      width: 400px;
+      list-style: none;
+    }
+    #tab-menu ul{
+      display: block;
+      margin: 0 6px;
+    }
+    #tab-menu li{
+      display: inline-block;
+      padding: 5px 25px;
+      background-color: #eee;
+      cursor: pointer;
+    }
+    #tab-menu li.active{
+      background-color: #000;
+      color: #fff;
+    }
+    #tab-box{
+      width: 400px;
+      padding: 25px 0;
+      border: 3px solid #000;
+      text-align: center;
+    }
+    #tab-box div{
+      display: none;
+    }
+    #tab-box div.active{
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>タブ</h1>
+  <hr>
+  <div id="main">
+    <div id="tab-menu">
+      <ul>
+        <li class="active">タブ1</li>
+        <li>タブ2</li>
+        <li>タブ3</li>
+        <li>タブ4</li>
+      </ul>
+    </div>
+    <div id="tab-box">
+      <div class="active">タブ1</div>
+      <div>タブ2</div>
+      <div>タブ3</div>
+      <div>タブ4</div>
+  </div>
+</body>
+
+<script>
+  $(function(){
+    $('#tab-menu li').on('click', function(){
+      if($(this).not('active')){
+        $(this).addClass('active').siblings('li').removeClass('active');
+        var index = $('#tab-menu li').index(this);
+        // $('#tab-box div').eq(index)はクリックされたタブのインデックスと同じインデックスの#tab-box divを取得する
+        $('#tab-box div').eq(index).addClass('active').siblings('div').removeClass('active');
+      }
+    })
+  })
+</script>
+</html>

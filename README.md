@@ -4,3 +4,5 @@
 - [タイマーアプリ](https://shoooohei.github.io/javascript/timer_app/)
 - [アコーディオン](https://shoooohei.github.io/javascript/accordion)
 - [乱数の生成](https://shoooohei.github.io/javascript/random_number)
+- [おみくじアプリ](https://shoooohei.github.io/javascript/omikuji_app)
+- [タブ機能](https://shoooohei.github.io/javascript/tab)

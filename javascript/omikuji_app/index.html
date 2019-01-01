@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>おみくじ</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    #output{
+      width: 300px;
+      text-align: center;
+      padding: 8px 0;
+      border: 1px solid #333;
+      min-height: 24px;
+      margin-top: 8px;
+      margin-left: 60px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    #btn{
+      width: 300px;
+      margin-top: 8px;
+      margin-left: 60px;
+      color: #333;
+      display: block;
+      text-align: center;
+      background-color: #f2f2f2;
+      padding: 8px 0;
+      font-size: 1rem;
+      font-weight: 700;
+      border: 1px solid #e6e6e6;
+      box-sizing: border-box;
+    }
+    #btn:hover{
+      cursor: pointer;
+      opacity: 0.9;
+    }
+    .daikichi{
+      background-color: gold;
+      color: #fff;
+    }
+    .daikyo{
+      background-color: #1c1c1c;
+      color: #fff;
+    }
+    .other{
+      background-color: #fff;
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>おみくじ</h1>
+  <hr>
+  <div id="main">
+    <div id="output">結果</div>
+    <div id="btn">実行</div>
+  </div>
+</body>
+
+<script>
+  $(function(){
+      var omikuji = ["大吉", "中吉", "小吉", "凶", "大凶"];
+      $('#btn').on("click", function(){
+        var rand = Math.floor(Math.random() * omikuji.length);
+        if(rand==0){
+          $('#output').addClass('daikichi').removeClass('daikyo').removeClass('other');
+        }else if(rand==4){
+          $('#output').addClass('daikyo').removeClass('daikichi').removeClass('other');
+        }else{
+          $('#output').addClass('other').removeClass('daikichi').removeClass('daikyo');
+        }
+        $("#output").text(omikuji[rand]);
+      })
+  })
+</script>
+</html>
