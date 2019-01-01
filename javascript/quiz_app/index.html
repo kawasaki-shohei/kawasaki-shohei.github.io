@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>クイズ</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    h2{
+      font-weight: bold;
+    }
+    #selectArea{
+      overflow: hidden;
+    }
+    #select1:hover, #select2:hover, #select3:hover{
+      text-decoration: underline;
+    }
+    .sel{
+      width: 200px;
+      height: 30px;
+      float: left;
+      cursor: pointer;
+    }
+    #next{
+      display: none;
+      cursor: pointer;
+    }
+    #answer, #result, #reset{
+      display: none;
+    }
+    #reset{
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>タブ</h1>
+  <hr>
+  <div id="main">
+    <h2>問題</h2>
+    <div id="question"></div>
+    <h2>選択肢</h2>
+    <div id="selectArea">
+      <div id="select1" class="sel" val="1"></div>
+      <div id="select2" class="sel" val="2"></div>
+      <div id="select3" class="sel" val="3"></div>
+    </div>
+    <div id="next">次へ</div>
+    <h2>解答</h2>
+    <div id="answer"></div>
+    <div id="result">結果</div>
+    <div id="reset">リセット</div>
+  </div>
+</body>
+
+<script>
+  $(function(){
+    // 問題、選択肢、解答を配列に格納
+    var quiz = new Array();
+    quiz[0] = ["問題1", "選択肢1", "選択肢2", "選択肢3", 1]
+    quiz[1] = ["問題2", "選択肢1", "選択肢2", "選択肢3", 1]
+    quiz[2] = ["問題3", "選択肢1", "選択肢2", "選択肢3", 1]
+    quiz[3] = ["問題4", "選択肢1", "選択肢2", "選択肢3", 1]
+    quiz[4] = ["問題5", "選択肢1", "選択肢2", "選択肢3", 1]
+
+    //変数エリア
+    var count = 0;
+    var correct = 0;
+    var incorrect = 0;
+
+    // 一番最初に問題を表示する
+    question();
+
+    // 関数エリア
+    // 問題をセットする関数
+    function question(){
+      $('#next').css('display', 'none');
+      $('#question').text(quiz[count][0]);
+      $('#select1').text(quiz[count][1]);
+      $('#select2').text(quiz[count][2]);
+      $('#select3').text(quiz[count][3]);
+    }
+
+    function next(){
+      if(count<4){
+        count++;
+        $('#next').css('display', 'block');
+        $('#next').on('click', function(){
+          $('.sel').css('pointer-events', 'auto');
+          $('#answer').css('display', 'none');
+          question();
+        })
+      }else{
+        $('#result').css('display', 'block');
+        $('#result').text('正解:' + correct + '問' + '  ' + '不正解' + incorrect + '問');
+        $('#reset').css('display', 'block');
+      }
+    }
+
+    // 処理エリア
+    // 選択肢をクリック
+    $('.sel').on('click', function(){
+      $('.sel').css('pointer-events', 'none');
+      var val1 = $(this).attr('val');
+      if(val1==quiz[count][quiz.length-1]){
+        alert('正解');
+        correct++;
+      }else{
+        alert('不正解');
+        incorrect++;
+      }
+      $('#answer').css('display', 'block');
+      $('#answer').text(quiz[count][quiz[count][quiz.length-1]]);
+      next();
+    })
+
+    // リセットボタンを押した処理
+    $('#reset').on('click', function(){
+      count = 0;
+      correct = 0;
+      incorrect = 0;
+      $('#answer').css('display', 'none');
+      $('#result').css('display', 'none');
+      $('#reset').css('display', 'none');
+      $('.sel').css('pointer-events', 'auto');
+      question();
+    })
+  })
+</script>
+</html>
