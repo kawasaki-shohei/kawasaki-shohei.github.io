@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>クイズ</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    h2{
+      font-weight: bold;
+    }
+    #selectArea{
+      overflow: hidden;
+      width: 600px;
+      margin-bottom: 20px;
+    }
+    #select1:hover, #select2:hover, #select3:hover{
+      text-decoration: underline;
+    }
+    .sel{
+      width: 200px;
+      height: 30px;
+      float: left;
+      cursor: pointer;
+    }
+    #next{
+      display: none;
+      cursor: pointer;
+    }
+    #answer, #result, #reset{
+      display: none;
+    }
+    #reset{
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .hid{
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>タブ</h1>
+  <hr>
+  <div id="main">
+    <h2>問題</h2>
+    <ul id="question"></ul>
+    <h2>選択肢</h2>
+    <ul id="selectArea"></ul>
+    <div id="next">次へ</div>
+    <h2>解答</h2>
+    <ul id="answer"></ul>
+    <div id="result">結果</div>
+    <div id="reset">リセット</div>
+  </div>
+</body>
+
+<script>
+  $(function(){
+    // 変数
+    // 何問目かをカウントする
+    var count = 0;
+    // 選択肢のvalの値を取得する
+    var valQ = "";
+    // jsonから取得した正解を格納する配列
+    var collectAns = new Array();
+    // data[i].ansの値を格納する配列
+    var collectNum = new Array();
+    // 正解数を数える
+    var collectCount = 0;
+    // 不正解数を数える
+    var incollectCount = 0;
+
+    json();
+    function json(){
+      $.getJSON('data.json', function(data){
+        // 問題をシャッフルする
+        var shuffle = function(){
+          return Math.random() - .5;
+        };
+        data.sort(shuffle);
+
+        for(var i in data){
+          $('#question').append("<li class='hid QQ" + i + "'>" + data[i].quiz + "</li>");
+          // data[i].selectはi番目のdataのselectを取得する。
+          // つまり、[{"sel1":"選択肢1", "sel2":"選択肢2", "sel3":"選択肢3"}]
+          for(var j in data[i].select){
+            // 今回のデータではdata[i].selectは常にデータは1つなのでjは0になる。
+            // data[i].select[j] → {"sel1":"選択肢1", "sel2":"選択肢2", "sel3":"選択肢3"}
+            $('#selectArea').append("<li class='sel hid q" + i + "' val='1'>" + data[i].select[j].sel1 + "</li>");
+            $('#selectArea').append("<li class='sel hid q" + i + "' val='2'>" + data[i].select[j].sel2 + "</li>");
+            $('#selectArea').append("<li class='sel hid q" + i + "' val='3'>" + data[i].select[j].sel3 + "</li>");
+            // collectNumに答えを格納
+            collectNum[i] = data[i].ans;
+            if(collectNum[i]==1){
+              collectAns[i] = data[i].select[j].sel1;
+            }else if(collectNum[i]==2){
+              collectAns[i] = data[i].select[j].sel2;
+            }else if(collectNum[i]==3){
+              collectAns[i] = data[i].select[j].sel3;
+            }
+          }
+          $('#answer').append("<li class='hid'>" + data[i].ans + "</li>");
+        }
+        quiz();
+      });
+    }
+
+    // 問題、選択肢、答えをセットする
+    function quiz(){
+      $('#question li.QQ' + count).removeClass('hid');
+      $('#selectArea li.q' + count).removeClass('hid');
+      choice();
+    }
+
+    // 選択肢を選んだときの処理
+    function choice(){
+      $('#selectArea li.q' + count).on('click', function(){
+        $('#selectArea li.q' + count).css('pointer-events', 'none');
+        valQ = $(this).attr('val');
+        checkAnswer(valQ);
+      })
+    }
+
+    // 答えのチェック
+    function checkAnswer(choiced){
+      if(choiced == collectNum[count]){
+        collectCount++;
+      }else if(choiced != collectNum[count]){
+        incollectCount++;
+      }
+      $('#answer').css('display', 'block').text(collectAns[count]);
+      $('#next').css('display', 'block');
+    }
+
+    // 次へボタンが押されたときの処理
+    $('#next').on('click', function(){
+      $('#next').css('display', 'none');
+      $('#answer').css('display', 'none');
+      $('.q' + count).css('pointer-events', 'auto');
+      var countBf = count;
+      count++;
+      // 前の問題と前の問題の選択肢を非表示状態にする
+      $('#question li.QQ' + countBf).addClass('hid');
+      $('#selectArea li.q' + countBf).addClass('hid');
+      // 次の問題と次の問題の選択肢を表示状態にする
+      $('#question li.QQ' + count).removeClass('hid');
+      // 5問目以降のクイズの処理と5問目のクイズの処理
+      if(count<5){
+        quiz();
+      }else{
+        alert('正解数は' + collectCount + '。不正解数は' + incollectCount + 'でした。');
+        $('#reset').css('display', 'block');
+      }
+    })
+
+
+
+
+
+
+    // リセットボタンを押されたときの処理
+    $('#reset').on('click', function(){
+      count = 0;
+      countBf = 0;
+      collectCount = 0;
+      incollectCount = 0;
+      $('#reset').css('display', 'none');
+      $('#question').empty();
+      $('#selectArea').empty();
+      $('#answer').empty();
+      json();
+    })
+  })
+</script>
+</html>
