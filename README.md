@@ -8,3 +8,4 @@
 - [タブ機能](https://shoooohei.github.io/javascript/tab)
 - [クイズ ~配列~](https://shoooohei.github.io/javascript/quiz_app_array)
 - [クイズ ~json~](https://shoooohei.github.io/javascript/quiz_app_json)
+- [パララックス](https://shoooohei.github.io/javascript/parallax)
