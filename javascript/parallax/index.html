@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>パララックス</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css"><!--reset.css-->
+  <style>
+    html,body{
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      width: 100%;
+      background-color: #fff;
+    }
+    .contents{
+      width: 100%;
+      color: #fff;
+      display: table;
+    }
+    .contents > *{
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+    .fadeDone{
+      opacity: 0;
+    }
+    #contents0{
+      background-color: #000;
+    }
+    #contents1{
+      background-color: #2cc53f;
+    }
+    #contents2{
+      background-color: #fc2d31;
+    }
+    #contents3{
+      background-color: #433faf;
+    }
+    #contents4{
+      background-color: #aaadff;
+    }
+    #contents5{
+      background-color: #78fdff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="contents0" class="contents">
+    <div>
+      <p>~スクロール~</p>
+    </div>
+  </div>
+  <div id="contents1" class="contents fadeDone">
+    <div>
+      <p class="fadeDone">~コンテンツ1~</p>
+      <p class="fadeDone">~コンテンツ1~</p>
+      <p class="fadeDone">~コンテンツ1~</p>
+      <p class="fadeDone">~コンテンツ1~</p>
+      <p class="fadeDone">~コンテンツ1~</p>
+    </div>
+  </div>
+  <div id="contents2" class="contents fadeDone">
+    <div>
+      <p class="fadeDone">~コンテンツ2~</p>
+      <p class="fadeDone">~コンテンツ2~</p>
+      <p class="fadeDone">~コンテンツ2~</p>
+      <p class="fadeDone">~コンテンツ2~</p>
+      <p class="fadeDone">~コンテンツ2~</p>
+    </div>
+  </div>
+  <div id="contents3" class="contents fadeDone">
+    <div>
+      <p class="fadeDone">~コンテンツ3~</p>
+      <p class="fadeDone">~コンテンツ3~</p>
+      <p class="fadeDone">~コンテンツ3~</p>
+      <p class="fadeDone">~コンテンツ3~</p>
+      <p class="fadeDone">~コンテンツ3~</p>
+    </div>
+  </div>
+  <div id="contents4" class="contents fadeDone">
+    <div>
+      <p class="fadeDone">~コンテンツ4~</p>
+      <p class="fadeDone">~コンテンツ4~</p>
+      <p class="fadeDone">~コンテンツ4~</p>
+      <p class="fadeDone">~コンテンツ4~</p>
+      <p class="fadeDone">~コンテンツ4~</p>
+    </div>
+  </div>
+  <div id="contents5" class="contents fadeDone">
+    <div>
+      <p class="fadeDone">~コンテンツ5~</p>
+      <p class="fadeDone">~コンテンツ5~</p>
+      <p class="fadeDone">~コンテンツ5~</p>
+      <p class="fadeDone">~コンテンツ5~</p>
+      <p class="fadeDone">~コンテンツ5~</p>
+    </div>
+  </div>
+  <div id="contents1" class="contents fadeDone">
+    <div>
+      <p class="fadeDone">~Fin~</p>
+    </div>
+  </div>
+</body>
+
+<script>
+  $(function(){
+    var h = $(window).height();
+    var speed = 200;   // フェードインするスピード
+    $('.contents').each(function(){
+      $(this).css({
+        height:h
+      });
+    });
+
+    $(window).on('scroll', function(){
+      var value = $(this).scrollTop();
+      $('.fadeDone').each(function(){
+        var fadeTop = $(this).offset().top;
+        var fadeShow = fadeTop - h/1.1;   // 出現する位置
+        if(value >= fadeShow){
+          $(this).stop().animate({
+            opacity: 1
+          }, speed);   //0.2秒でopacityを1にするアニメーション
+        }else{
+          $(this).stop().animate({
+            opacity: 0
+          }, speed);
+        }
+      })
+    })
+  })
+</script>
+</html>
