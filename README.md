@@ -2,7 +2,7 @@
 https://shoooohei.github.io/blog/public/
 
 # Ruby on Rails アプリケーション
-### ■ カップル専用の家計簿アプリ PairMoney
+### ■ カップル専用の家計簿アプリケーション PairMoney
 - サイト: https://pairmoney.herokuapp.com/
 - ソースコード: https://github.com/shoooohei/household_account_book
 
@@ -10,26 +10,26 @@ https://shoooohei.github.io/blog/public/
 - サイト: https://review-in-english.herokuapp.com/
 - ソースコード: https://github.com/shoooohei/review_in_english
 
-### ■ 生徒の学習の進捗状況を管理するアプリ
+### ■ 生徒の学習の進捗状況を管理するアプリケーション
 - ソースコード: https://github.com/shoooohei/progress
 
-### ■ 学んだ英単語をメモするアプリ
+### ■ 学んだ英単語をメモするアプリケーション
 - サイト: https://review-in-english.herokuapp.com/
 - ソースコード: https://github.com/shoooohei/remember-english-words
 
-### ■ [DIC]instagramクローン
+### ■ [DIC]instagramクローンアプリケーション
 - ソースコード: https://github.com/shoooohei/instagram
 
-### ■ [DIC]twitterクローン
+### ■ [DIC]twitterクローンアプリケーション
 - ソースコード: https://github.com/shoooohei/fake_tweet
 
-### ■ [DIC]ブログアプリ
+### ■ [DIC]ブログアプリケーション
 - ソースコード: https://github.com/shoooohei/shohei_portfolio-blogapp
 
-# React アプリ
+# React アプリケーション
 - [カウンター](https://shoooohei.github.io/practice-simple-count-react-redux-app/)
 
-# JQueryアプリ
+# JQuery アプリケーション
 - [カウンターアプリ](https://shoooohei.github.io/javascript/counter_app/)
 - [スクロールボタン](https://shoooohei.github.io/javascript/scroll_button/)
 - [タイマーアプリ](https://shoooohei.github.io/javascript/timer_app/)
