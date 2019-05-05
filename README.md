@@ -6,6 +6,9 @@
 - [乱数の生成](https://shoooohei.github.io/javascript/random_number)
 - [おみくじアプリ](https://shoooohei.github.io/javascript/omikuji_app)
 - [タブ機能](https://shoooohei.github.io/javascript/tab)
-- [クイズ ~配列~](https://shoooohei.github.io/javascript/quiz_app_array)
-- [クイズ ~json~](https://shoooohei.github.io/javascript/quiz_app_json)
+- [クイズ \~配列\~](https://shoooohei.github.io/javascript/quiz_app_array)
+- [クイズ \~json\~](https://shoooohei.github.io/javascript/quiz_app_json)
 - [パララックス](https://shoooohei.github.io/javascript/parallax)
+
+# React App
+- [カウンター](https://shoooohei.github.io/practice-simple-count-react-redux-app/)
