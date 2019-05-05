@@ -26,7 +26,7 @@ https://shoooohei.github.io/blog/public/
 ### ■ [DIC]ブログアプリ
 - ソースコード: https://github.com/shoooohei/shohei_portfolio-blogapp
 
-# React App
+# React アプリ
 - [カウンター](https://shoooohei.github.io/practice-simple-count-react-redux-app/)
 
 # JQueryアプリ
