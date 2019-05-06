@@ -35,6 +35,10 @@ https://shoooohei.github.io/blog/public/
 - サイト: https://shoooohei.github.io/giphyAPI_React-Redux/
 - ソースコード: https://github.com/shoooohei/giphyAPI_React-Redux
 
+### ■ 電卓アプリケーション
+- サイト: https://shoooohei.github.io/react-redux-calculator/
+- ソースコード: https://github.com/shoooohei/react-redux-calculator
+
 # JQuery アプリケーション
 - [カウンターアプリ](https://shoooohei.github.io/javascript/counter_app/)
 - [スクロールボタン](https://shoooohei.github.io/javascript/scroll_button/)
