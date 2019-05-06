@@ -27,7 +27,13 @@ https://shoooohei.github.io/blog/public/
 - ソースコード: https://github.com/shoooohei/shohei_portfolio-blogapp
 
 # React アプリケーション
-- [カウンター](https://shoooohei.github.io/practice-simple-count-react-redux-app/)
+### ■ カウンターアプリケーション
+- サイト: https://shoooohei.github.io/practice-simple-count-react-redux-app/
+- ソースコード: https://github.com/shoooohei/practice-simple-count-react-redux-app
+
+### ■ 検索ワードからGIF画像を表示するアプリケーション
+- サイト: https://shoooohei.github.io/giphyAPI_React-Redux/
+- ソースコード: https://github.com/shoooohei/giphyAPI_React-Redux
 
 # JQuery アプリケーション
 - [カウンターアプリ](https://shoooohei.github.io/javascript/counter_app/)
