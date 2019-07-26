@@ -28,7 +28,6 @@
 - サイト: https://shoooohei.github.io/react-redux-calculator/
 - ソースコード: https://github.com/shoooohei/react-redux-calculator
 
-## Udemy
 以下はこちらのUdemyで紹介されているアプリケーション  
 https://www.udemy.com/react-redux-basic/  
 
