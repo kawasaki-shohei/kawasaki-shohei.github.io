@@ -11,7 +11,6 @@
 - ソースコード: [https://github.com/shoooohei/progress](https://github.com/shoooohei/progress)
 
 ### ■ 学んだ英単語をメモするアプリケーション
-- サイト: [https://review-in-english.herokuapp.com/](https://review-in-english.herokuapp.com/)
 - ソースコード: [https://github.com/shoooohei/remember-english-words](https://github.com/shoooohei/remember-english-words)
 
 ### ■ [DIC]instagramクローンアプリケーション
