@@ -1,9 +1,9 @@
 # Railsアプリケーション
-### ■ カップル専用の家計簿アプリケーション PairMoney
+### ■ カップル専用の家計簿アプリケケーション PairMoney
 - サイト: [https://pairmoney.herokuapp.com/](https://pairmoney.herokuapp.com/)
 - ソースコード: [https://github.com/shoooohei/household_account_book](https://github.com/shoooohei/household_account_book)
 
-### ■ 映画のレビューを英語で書いて、添削しあうサイト ReviewInEnglish
+### ■ 英語で書く映画のレビューアプリケーション ReviewInEnglish
 - サイト: [https://review-in-english.herokuapp.com/](https://review-in-english.herokuapp.com/)
 - ソースコード: [https://github.com/shoooohei/review_in_english](https://github.com/shoooohei/review_in_english)
 
