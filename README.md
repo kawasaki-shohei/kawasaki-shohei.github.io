@@ -1,6 +1,3 @@
-# ブログ
-https://shoooohei.github.io/blog/public/
-
 # Ruby on Rails アプリケーション
 ### ■ カップル専用の家計簿アプリケーション PairMoney
 - サイト: https://pairmoney.herokuapp.com/
@@ -27,6 +24,14 @@ https://shoooohei.github.io/blog/public/
 - ソースコード: https://github.com/shoooohei/shohei_portfolio-blogapp
 
 # React アプリケーション
+### ■ 電卓アプリケーション(オリジナル)
+- サイト: https://shoooohei.github.io/react-redux-calculator/
+- ソースコード: https://github.com/shoooohei/react-redux-calculator
+
+## Udemy
+以下はこちらのUdemyで紹介されているアプリケーション  
+https://www.udemy.com/react-redux-basic/  
+
 ### ■ カウンターアプリケーション
 - サイト: https://shoooohei.github.io/practice-simple-count-react-redux-app/
 - ソースコード: https://github.com/shoooohei/practice-simple-count-react-redux-app
@@ -35,11 +40,10 @@ https://shoooohei.github.io/blog/public/
 - サイト: https://shoooohei.github.io/giphyAPI_React-Redux/
 - ソースコード: https://github.com/shoooohei/giphyAPI_React-Redux
 
-### ■ 電卓アプリケーション
-- サイト: https://shoooohei.github.io/react-redux-calculator/
-- ソースコード: https://github.com/shoooohei/react-redux-calculator
-
 # JQuery アプリケーション
+以下はこのUdemyで紹介されているアプリケーション    
+https://www.udemy.com/javascriptweb/  
+
 - [カウンターアプリ](https://shoooohei.github.io/javascript/counter_app/)
 - [スクロールボタン](https://shoooohei.github.io/javascript/scroll_button/)
 - [タイマーアプリ](https://shoooohei.github.io/javascript/timer_app/)
