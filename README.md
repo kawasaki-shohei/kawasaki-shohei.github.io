@@ -1,5 +1,5 @@
 # Railsアプリケーション
-### ■ カップル専用の家計簿アプリケケーション PairMoney
+### ■ 夫婦またはカップル専用の家計簿アプリケーション PairMoney
 - サイト: [https://pairmoney.herokuapp.com/](https://pairmoney.herokuapp.com/)
 - ソースコード: [https://github.com/shoooohei/household_account_book](https://github.com/shoooohei/household_account_book)
 
