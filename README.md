@@ -38,7 +38,7 @@
 - サイト: [https://shoooohei.github.io/giphyAPI_React-Redux/](https://shoooohei.github.io/giphyAPI_React-Redux/)
 - ソースコード: [https://github.com/shoooohei/giphyAPI_React-Redux](https://github.com/shoooohei/giphyAPI_React-Redux)
 
-# JQuery アプリケーション
+# jQuery アプリケーション
 以下はこのUdemyで紹介されているアプリケーション    
 [https://www.udemy.com/javascriptweb/](https://www.udemy.com/javascriptweb/)  
 
