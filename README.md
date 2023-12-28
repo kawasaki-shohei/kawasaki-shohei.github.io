@@ -13,5 +13,5 @@
 
 # React アプリケーション
 ### ■ 電卓アプリケーション(オリジナル)
-- サイト: [https://shoooohei.github.io/react-redux-calculator/](https://shoooohei.github.io/react-redux-calculator/)
-- ソースコード: [https://github.com/shoooohei/react-redux-calculator](https://github.com/shoooohei/react-redux-calculator)
+- サイト: [https://kawasaki-shohei.github.io/react-redux-calculator/](https://kawasaki-shohei.github.io/react-redux-calculator/)
+- ソースコード: [https://github.com/kawasaki-shohei/react-redux-calculator](https://github.com/kawasaki-shohei/react-redux-calculator)
